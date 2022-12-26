@@ -18,4 +18,10 @@
 	.value-sub-info {
 		@apply font-light text-sm;
 	}
+	.day-card {
+		@apply flex flex-col items-center border border-secondary rounded p-2;
+	}
+	.day-card-day {
+		@apply text-sm text-secondaryLight mt-3;
+	}
 }
