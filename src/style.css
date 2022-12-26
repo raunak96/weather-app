@@ -22,13 +22,13 @@
 		@apply font-light text-sm;
 	}
 	.day-card {
-		@apply flex flex-col items-center border border-secondary rounded p-2;
+		@apply flex flex-col items-center border border-secondary rounded p-2 shadow-sm hover:shadow-lg hover:bg-primaryDarker transition duration-150 ease-in cursor-pointer;
 	}
 	.day-card-day {
 		@apply text-sm text-secondaryLight mt-3;
 	}
 	.hour-row {
-		@apply bg-primaryDark;
+		@apply bg-primaryDark border-secondaryLight hover:border;
 	}
 	.hour-row:nth-child(2n) {
 		@apply bg-primaryDarker;

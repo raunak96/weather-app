@@ -1,14 +1,18 @@
-import { CurrentWeather, DailyWeather, WeatherForecastRes } from "../types";
-import { ICON_MAP } from "./iconMap";
+import {
+	CurrentWeather,
+	DailyWeather,
+	HourlyWeather,
+	WeatherForecastRes,
+} from "../types";
 import "./style.css";
-import { setValue } from "./utils";
+import { DAY_FORMATTER, getIconUrl, HOUR_FORMATTER, setValue } from "./utils";
 import { getWeather } from "./weather";
 
 const currentIcon: HTMLImageElement = document.querySelector(
 	"[data-current-icon]"
 )!;
 const renderCurrentWeather = (current: CurrentWeather) => {
-	currentIcon.src = `icons/${ICON_MAP.get(current.iconCode)}.svg` || "";
+	currentIcon.src = getIconUrl(current.iconCode);
 	setValue("current-temp", current.currentTemp);
 	setValue("current-high", current.highTemp);
 	setValue("current-low", current.lowTemp);
@@ -19,19 +23,79 @@ const renderCurrentWeather = (current: CurrentWeather) => {
 };
 
 const dailySection: HTMLElement = document.querySelector("[data-day-section]")!;
-const dayCardTemplate = document.getElementById("day-card-template")!;
+const dayCardTemplate = document.getElementById(
+	"day-card-template"
+)! as HTMLTemplateElement;
 
 const renderDailyWeather = (daily: DailyWeather[]) => {
 	dailySection.innerHTML = "";
-	dayCardTemplate.innerHTML = "";
+	daily.forEach(day => {
+		// Clone the template content
+		const element = dayCardTemplate.content.cloneNode(
+			true
+		) as HTMLDivElement;
+		setValue("temp", day.maxTemp, { parent: element });
+		setValue("date", DAY_FORMATTER.format(day.timestamp), {
+			parent: element,
+		});
+		const dayIcon = element.querySelector(
+			"[data-icon]"
+		) as HTMLImageElement;
+		dayIcon.src = getIconUrl(day.iconCode);
+		dailySection.append(element);
+	});
 };
+
+const hourlySection: HTMLTableSectionElement = document.querySelector(
+	"[data-hour-section]"
+)!;
+const hourRowTemplate = document.getElementById(
+	"hour-row-template"
+)! as HTMLTemplateElement;
+function renderHourlyWeather(hourly: HourlyWeather[]) {
+	hourlySection.innerHTML = "";
+	hourly.forEach(hour => {
+		const element = hourRowTemplate.content.cloneNode(true) as HTMLElement;
+		setValue("temp", hour.temp, { parent: element });
+		setValue("fl-temp", hour.feelsLike, { parent: element });
+		setValue("wind", hour.windSpeed, { parent: element });
+		setValue("precip", hour.precip, { parent: element });
+		setValue("day", DAY_FORMATTER.format(hour.timestamp), {
+			parent: element,
+		});
+		setValue("time", HOUR_FORMATTER.format(hour.timestamp), {
+			parent: element,
+		});
+		const hourIcon: HTMLImageElement =
+			element.querySelector("[data-icon]")!;
+		hourIcon.src = getIconUrl(hour.iconCode);
+		hourlySection.append(element);
+	});
+}
 
 const renderWeather = ({ current, daily, hourly }: WeatherForecastRes) => {
 	renderCurrentWeather(current);
 	renderDailyWeather(daily);
+	renderHourlyWeather(hourly);
 	document.body.classList.remove("blurred");
 };
 
-getWeather(10, 10, Intl.DateTimeFormat().resolvedOptions().timeZone)
-	.then(renderWeather)
-	.catch(() => alert("Error getting weather data: "));
+const positionSuccess = ({ coords }: GeolocationPosition) => {
+	getWeather(
+		coords.latitude,
+		coords.longitude,
+		Intl.DateTimeFormat().resolvedOptions().timeZone
+	)
+		.then(renderWeather)
+		.catch(err => {
+			alert("Error getting weather data: ");
+			console.log(err);
+		});
+};
+
+navigator.geolocation.getCurrentPosition(positionSuccess, error => {
+	alert(
+		"There was an error getting your location. Please allow us to use your location and refresh the page."
+	);
+	console.log(error);
+});
