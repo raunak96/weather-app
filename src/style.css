@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.weather-icon {
+		@apply w-10 h-10 object-contain;
+	}
+	.icon-large {
+		@apply w-20 h-20;
+	}
+	.info-group {
+		@apply flex flex-col items-center;
+	}
+	.label {
+		@apply uppercase font-bold text-xs text-secondaryLight;
+	}
+	.value-sub-info {
+		@apply font-light text-sm;
+	}
+}

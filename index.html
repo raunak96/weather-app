@@ -1,10 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Weather App</title>
-		<script type="module" src="/src/main.ts"></script>
-	</head>
-	<body class="bg-blue-400"></body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <script type="module" src="/src/main.ts"></script>
+</head>
+
+<body class="bg-primary text-secondary font-sans">
+    <header class="flex items-center">
+        <div class="flex items-center justify-center w-1/2 m-2 p-2 border-r-2 border-secondary space-x-4">
+            <img src="icons/sun.svg" alt="current-weather" class="weather-icon icon-large" data-current-icon />
+            <div class="text-[2rem]"><span data-current-temp>31</span>&deg;</div>
+        </div>
+        <div class="w-1/2 grid grid-cols-3 gap-2">
+            <div class="info-group">
+                <div class="label">High</div>
+                <div><span data-current-high>32</span>&deg;</div>
+            </div>
+            <div class="info-group">
+                <div class="label">FL High</div>
+                <div><span data-current-fl-high>27</span>&deg;</div>
+            </div>
+            <div class="info-group">
+                <div class="label">Wind</div>
+                <div>
+                    <span data-current-wind>9</span><span class="value-sub-info">mph</span>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="label">Low</div>
+                <div><span data-current-low>19</span>&deg;</div>
+            </div>
+            <div class="info-group">
+                <div class="label">FL Low</div>
+                <div><span data-current-fl-low>12</span>&deg;</div>
+            </div>
+            <div class="info-group">
+                <div class="label">Precip</div>
+                <div>
+                    <span data-current-precip>0.1</span><span class="value-sub-info">in</span>
+                </div>
+            </div>
+        </div>
+    </header>
+</body>
+
 </html>
