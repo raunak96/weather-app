@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer components {
+	.blurred {
+		@apply blur-sm overflow-hidden;
+	}
 	.weather-icon {
 		@apply w-10 h-10 object-contain;
 	}

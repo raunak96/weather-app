@@ -8,10 +8,10 @@
     <script type="module" src="/src/main.ts"></script>
 </head>
 
-<body class="bg-primary text-secondary font-sans">
+<body class="blurred bg-primary text-secondary font-sans">
 
-    <header class="flex items-center">
-        <div class="flex items-center justify-center w-1/2 m-2 p-2 border-r-2 border-secondary space-x-4">
+    <header class="flex items-center divide-x-2 divide-secondary">
+        <div class="flex items-center justify-center w-1/2 m-2 p-2 space-x-4">
             <img src="icons/sun.svg" alt="current-weather" class="weather-icon icon-large" data-current-icon />
             <div class="text-[2rem]"><span data-current-temp>31</span>&deg;</div>
         </div>
@@ -48,7 +48,8 @@
     </header>
     <!-- Day Wise Weather Section -->
     <section
-        class="grid grid-cols-[repeat(auto-fit,_75px)] md:grid-cols-[repeat(auto-fit,_100px)] lg:grid-cols-[repeat(auto-fit,_120px)] gap-4 p-4 justify-center">
+        class="grid grid-cols-[repeat(auto-fit,_75px)] md:grid-cols-[repeat(auto-fit,_100px)] lg:grid-cols-[repeat(auto-fit,_120px)] gap-4 p-4 justify-center"
+        data-day-section>
         <div class="day-card">
             <img src="icons/cloud.svg" class="weather-icon" />
             <div class="day-card-day">Monday</div>
