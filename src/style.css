@@ -24,4 +24,13 @@
 	.day-card-day {
 		@apply text-sm text-secondaryLight mt-3;
 	}
+	.hour-row {
+		@apply bg-primaryDark;
+	}
+	.hour-row:nth-child(2n) {
+		@apply bg-primaryDarker;
+	}
+	.hour-row > td {
+		@apply py-4 px-2;
+	}
 }
